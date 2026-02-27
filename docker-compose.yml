@@ -1,0 +1,8 @@
+services:
+  app:
+    build:
+      context: .            # the folder containing your Dockerfile
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
