@@ -1,27 +1,25 @@
-name: Deploy to VPS
+name: Deploy
 
+# Trigger the workflow on push and
+# pull request events on the master branch
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
+# Authenticate to the the server via ssh
+# and run our deployment script
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      
-      
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-
+      - uses: actions/checkout@v3
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@main
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
+          port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /root/nodejs-app-dep-automate
-            git pull origin main
-            docker compose down
-            docker compose up -d --build
+          script: "cd /root/nodejs-app-dep-automate && ./.scripts/deploy.sh"
