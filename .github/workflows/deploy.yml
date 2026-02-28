@@ -27,7 +27,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /root/nodejs-app-dep-automate
+            cd /var/www/nodejs-app-dep-automate
             git fetch origin
             git reset --hard origin/main
             docker compose down
