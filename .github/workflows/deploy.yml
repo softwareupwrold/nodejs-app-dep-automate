@@ -13,13 +13,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Deploy to Server
+      - name: Checkout Code 
+        uses: actions/checkout@v4
+
+      - name: Deploy Via SSH to Server
         uses: appleboy/ssh-action@v1.0.3
+
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          script: "cd /root/nodejs-app-dep-automate && ./.scripts/deploy.sh"
+          script: 
+            cd /root/nodejs-app-dep-automate
+            git pull origin main
+            docker compose up -d --build
