@@ -26,7 +26,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          script: 
+          script: |
             cd /root/nodejs-app-dep-automate
             git pull origin main
             docker compose up -d --build
