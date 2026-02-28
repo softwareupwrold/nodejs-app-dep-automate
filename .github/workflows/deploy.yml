@@ -28,5 +28,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /root/nodejs-app-dep-automate
-            git pull origin main
-            docker compose up -d --build
+            git fetch origin
+            git reset --hard origin/main
+            docker compose down
+            docker compose up -d --build 
